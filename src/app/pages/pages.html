@@ -1,0 +1,29 @@
+<div class="min-h-screen bg-gray-50">
+  <!-- Navbar -->
+  <nav class="bg-blue-900 text-white p-4 shadow-lg">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Voluntariado</h1>
+      <div class="flex gap-4">
+        <a [routerLink]="['/pages/dashboard']" 
+           routerLinkActive="bg-blue-700"
+           class="px-4 py-2 rounded hover:bg-blue-800 transition-colors">
+          Dashboard
+        </a>
+        <a [routerLink]="['/pages/usuario']" 
+           routerLinkActive="bg-blue-700"
+           class="px-4 py-2 rounded hover:bg-blue-800 transition-colors">
+          Usuario
+        </a>
+        <button (click)="logout()" 
+                class="px-4 py-2 rounded bg-red-600 hover:bg-red-700 transition-colors">
+          Cerrar Sesión
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenido dinámico -->
+  <main class="container mx-auto p-6">
+    <router-outlet></router-outlet>
+  </main>
+</div>
