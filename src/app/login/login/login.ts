@@ -14,7 +14,7 @@ declare function init_plugins(): any;
   imports: [
     CommonModule,
     FormsModule,
-    RouterLink
+    // RouterLink
   ],
   templateUrl: './login.html',
   styleUrl: './login.css'
