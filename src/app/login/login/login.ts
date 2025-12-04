@@ -1,12 +1,10 @@
-import { Component, OnInit, PLATFORM_ID, inject } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, inject, ViewEncapsulation } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UsuarioService } from '../../service/usuario.service';
 import { Usuario } from '../../models/ususario.model';
-
-declare function init_plugins(): any;
 
 @Component({
   selector: 'app-login',
@@ -17,7 +15,8 @@ declare function init_plugins(): any;
     // RouterLink
   ],
   templateUrl: './login.html',
-  styleUrl: './login.css'
+  styleUrl: './login.css',
+  encapsulation: ViewEncapsulation.None
 })
 export class Login implements OnInit {
   private platformId = inject(PLATFORM_ID);
@@ -35,10 +34,7 @@ export class Login implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.isBrowser && typeof init_plugins === 'function') {
-      init_plugins();
-    }
-    
+
     // Solo accede a localStorage en el navegador
     if (this.isBrowser) {
       this.email = localStorage.getItem('email') || '';
@@ -54,7 +50,7 @@ export class Login implements OnInit {
     }
     const usuario = new Usuario(form.value.email, form.value.password);
     this._usuarioService.login(usuario, form.value.recuerdame)
-      .subscribe(correcto => this.router.navigate(['/dashboard']));
+      .subscribe(correcto => this.router.navigate(['/pages/dashboard']));
   }
 
   onClose(): void {

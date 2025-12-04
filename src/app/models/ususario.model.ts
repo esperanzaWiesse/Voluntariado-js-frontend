@@ -6,6 +6,7 @@ export class Usuario {
         public password: string,
         // el ? significa que es obcional y que desde hay para abajo los demas tambien deven de ser obcionales
         public idUsuario?: string,
+        public rol?: string,
         public nombre?: string,
         public apPaterno?: string,
         public apMaterno?: string,

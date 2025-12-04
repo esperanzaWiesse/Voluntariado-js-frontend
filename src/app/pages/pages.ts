@@ -2,14 +2,18 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterLink, Router } from '@angular/router';
 import { UsuarioService } from '../service/usuario.service';
+import { Sidebar} from '../shared/sidebar/sidebar';
+import { Header} from '../shared/header/header';
 
 @Component({
   selector: 'app-pages',
-  standalone: true,  // ← IMPORTANTE
+  standalone: false,  // ← IMPORTANTE
   imports: [
     CommonModule,
     RouterOutlet,
-    RouterLink
+    RouterLink,
+    Sidebar,
+    Header
   ],
   templateUrl: './pages.html',
   styleUrl: './pages.css'

@@ -4,14 +4,15 @@ import { CommonModule } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 
 import {
-  UsuarioService
-} from './service.index'
-
+  UsuarioService,
+  LogingGuardGuard
+} from './service.index';
 
 @NgModule({
   declarations: [],
   providers:[
     UsuarioService,
+    LogingGuardGuard,
     provideHttpClient()
   ],
   imports: [

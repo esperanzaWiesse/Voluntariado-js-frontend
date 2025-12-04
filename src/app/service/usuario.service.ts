@@ -2,9 +2,16 @@ import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, map, catchError } from 'rxjs/operators';
 import { Usuario } from '../models/ususario.model';
 import { URL_SERVICIOS } from '../config/config';
+import Swal from 'sweetalert2';
+
+// Interfaz para Fecha por que no esta definida en la tabla usuario
+interface Fecha {
+  fechInicioPer?: string;
+  fechFinPer?: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -77,4 +84,63 @@ export class UsuarioService {
   estaLogueado(): boolean {
     return this.token.length > 5;
   }
+
+  guardarUsuario(usuario: Usuario, fecha?: Fecha): Observable<any> {
+    let url = URL_SERVICIOS + '/usuario';
+
+    if (usuario.idUsuario) {
+      // actualizando
+      url += '/' + usuario.idUsuario;
+      url += '?token=' + this.token;
+
+      return this.http.put(url, usuario).pipe(
+        map((resp: any) => {
+          Swal.fire('Usuario Actualizado', usuario.nombre, 'success');
+          return resp.usuario;
+        })
+      );
+    } else {
+      // creando
+      url += '?token=' + this.token;
+
+      return this.http.post(url, [usuario, fecha]).pipe(
+        map((resp: any) => {
+          Swal.fire('Usuario Creado', usuario.nombre, 'success');
+          return resp.usuario;
+        })
+      );
+    }
+  }
+
+  cargarUsuarios(): Observable<any> {
+    const url = URL_SERVICIOS + '/usuario';
+    return this.http.get(url);
+  }
+
+  cargarUsuario(id: string): Observable<any> {
+    const url = URL_SERVICIOS + '/usuario/' + id;
+    return this.http.get(url).pipe(
+      map((resp: any) => resp.usuario)
+    );
+  }
+
+  buscarUsuarios(termino: string): Observable<Usuario[]> {
+    const url = URL_SERVICIOS + '/busqueda/colleccion/usuarios/' + termino;
+    return this.http.get(url).pipe(
+      map((resp: any) => resp.usuarios)
+    );
+  }
+
+  desactivarUsuario(usuario: Usuario): Observable<any> {
+    let url = URL_SERVICIOS + '/usuario/delete/' + usuario.idUsuario;
+    url += '?token=' + this.token;
+
+    return this.http.put(url, usuario).pipe(
+      map((resp: any) => {
+        Swal.fire('Usuario Desactivado', usuario.nombre, 'success');
+        return resp;
+      })
+    );
+  }
+
 }

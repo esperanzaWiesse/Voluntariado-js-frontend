@@ -1,6 +1,6 @@
-<div class="min-h-screen bg-gray-50">
-  <!-- Navbar -->
-  <nav class="bg-blue-900 text-white p-4 shadow-lg">
+<!-- <div class="min-h-screen bg-gray-50"> -->
+  <!-- header -->
+  <!-- <nav class="bg-blue-900 text-white p-4 shadow-lg">
     <div class="container mx-auto flex justify-between items-center">
       <h1 class="text-2xl font-bold">Voluntariado</h1>
       <div class="flex gap-4">
@@ -22,8 +22,28 @@
     </div>
   </nav>
 
+  <app-sidebar></app-sidebar> -->
+
   <!-- Contenido dinámico -->
-  <main class="container mx-auto p-6">
+  <!-- <main class="container mx-auto p-6">
     <router-outlet></router-outlet>
   </main>
+</div> -->
+
+
+<!-- nueva version -->
+<div class="min-h-screen bg-gray-50">
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+  
+  <!-- Contenedor principal con margen izquierdo -->
+  <div class="ml-64 flex flex-col min-h-screen">
+    <!-- Header -->
+    <app-header></app-header>
+    
+    <!-- Contenido dinámico -->
+    <main class="flex-1 p-6">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
 </div>

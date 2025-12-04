@@ -1,11 +1,22 @@
 import { Component } from '@angular/core';
+import { RouterOutlet, RouterLink, Router } from '@angular/router';
+import { UsuarioService } from '../../service/usuario.service';
 
 @Component({
   selector: 'app-header',
-  imports: [],
   templateUrl: './header.html',
   styleUrl: './header.css',
+  standalone: true,
+  imports: [RouterOutlet, RouterLink]
 })
 export class Header {
+  constructor(
+      private router: Router,
+      private usuarioService: UsuarioService
+    ) {}
 
+    logout(): void {
+      this.usuarioService.logout();
+      this.router.navigate(['/login']);
+    }
 }
