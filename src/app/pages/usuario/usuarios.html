@@ -85,15 +85,6 @@
                             <!-- Nombre completo -->
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
-                                    <div
-                                        class="flex-shrink-0 h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600"
-                                            viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd"
-                                                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                    </div>
                                     <div>
                                         <div class="text-sm font-bold text-gray-900">
                                             {{ usuario.nombre }} {{ usuario.apPaterno }} {{ usuario.apMaterno }}
@@ -138,36 +129,48 @@
                                 </button>
                             </td>
 
-                            <!-- Estado -->
-                            <td class="px-6 py-4 whitespace-nowrap text-center">
-                                <!-- Estado Activo -->
-                                <button *ngIf="usuario.activo" (click)="desactivarUsuario(usuario)"
-                                    class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold py-2.5 px-6 rounded-lg transition duration-200 transform hover:scale-105 shadow-md hover:shadow-lg group">
-                                    <span class="h-2 w-2 bg-white rounded-full animate-pulse"></span>
-                                    <span>Activo</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                        class="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity"
-                                        viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd"
-                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </button>
 
-                                <!-- Estado Inactivo -->
-                                <button *ngIf="!usuario.activo" (click)="desactivarUsuario(usuario)"
-                                    class="inline-flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-semibold py-2.5 px-6 rounded-lg transition duration-200 transform hover:scale-105 shadow-md hover:shadow-lg group">
-                                    <span class="h-2 w-2 bg-white rounded-full"></span>
-                                    <span>Inactivo</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                        class="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity"
-                                        viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd"
-                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </button>
+                            <!-- Toggle Tailwind -->
+                            <td class="px-6 py-4 whitespace-nowrap text-center">
+                                <div class="flex flex-col items-center gap-2">
+                                    <button type="button" role="switch" [attr.aria-checked]="usuario.activo"
+                                        (click)="desactivarUsuario(usuario)"
+                                        class="relative inline-flex items-center focus:outline-none">
+                                        <!-- Track -->
+                                        <span class="block w-14 h-8 rounded-full transition-colors duration-300"
+                                            [ngClass]="usuario.activo ? 'bg-[#2A7FFF]' : 'bg-gray-200'"></span>
+
+                                        <!-- Knob -->
+                                        <span
+                                            class="absolute left-0.5 top-0.5 w-7 h-7 bg-white rounded-full shadow transform transition-transform duration-300 flex items-center justify-center"
+                                            [ngClass]="usuario.activo ? 'translate-x-6' : 'translate-x-0'">
+                                            <!-- Icono: check cuando activo -->
+                                            <svg *ngIf="usuario.activo" xmlns="http://www.w3.org/2000/svg"
+                                                class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M20 6L9 17l-5-5" />
+                                            </svg>
+
+                                            <!-- Icono: X cuando inactivo -->
+                                            <svg *ngIf="!usuario.activo" xmlns="http://www.w3.org/2000/svg"
+                                                class="h-4 w-4 text-gray-400" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <path d="M18 6L6 18M6 6l12 12" />
+                                            </svg>
+                                        </span>
+                                    </button>
+
+                                    <!-- Etiqueta -->
+                                    <div class="text-sm font-semibold"
+                                        [ngClass]="usuario.activo ? 'text-[#2A7FFF]' : 'text-gray-500'">
+                                        {{ usuario.activo ? 'Activo' : 'Inactivo' }}
+                                    </div>
+                                </div>
                             </td>
+
+
+
                         </tr>
                     </tbody>
                 </table>
