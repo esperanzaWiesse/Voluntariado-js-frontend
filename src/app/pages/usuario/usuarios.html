@@ -15,6 +15,19 @@
     </div>
 </div> -->
 
+<!-- Buscador con Tailwind -->
+<div class="w-full mb-6">
+    <input #input (keyup)="buscarPersona(input.value)" type="text" placeholder="Buscar usuario..."
+        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-gray-700 shadow-sm" />
+</div>
+
+
+
+
+
+
+
+
 <!-- Contenido principal -->
 <div class="container mx-auto px-4 py-8 animate-fade-in">
     <div class="bg-white rounded-xl shadow-2xl overflow-hidden border border-gray-100">

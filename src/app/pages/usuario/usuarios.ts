@@ -52,6 +52,21 @@ export class Usuarios implements OnInit {
       });
   }
 
+  buscarPersona(termino: string) {
+    termino = termino.trim().toLowerCase();
+
+    if (termino.length === 0) {
+      this.cargarUsuarios();
+      return;
+    }
+
+    this.usuarios = this.usuarios.filter(u =>
+      `${u.nombre} ${u.apPaterno} ${u.apMaterno}`.toLowerCase().includes(termino) ||
+      u.dni?.toString().includes(termino) ||
+      u.email?.toLowerCase().includes(termino)
+    );
+  }
+
   desactivarUsuario(usuario: Usuario): void {
     const accion = usuario.activo ? 'desactivar' : 'activar';
     const titulo = usuario.activo ? 'desactivado' : 'activado';
