@@ -17,6 +17,7 @@ interface Fecha {
   providedIn: 'root'
 })
 export class UsuarioService {
+
   private platformId = inject(PLATFORM_ID);
   private isBrowser: boolean;
 
@@ -26,6 +27,20 @@ export class UsuarioService {
   constructor(private http: HttpClient) {
     this.isBrowser = isPlatformBrowser(this.platformId);
     this.cargarStorage();
+  }
+
+  estaLogueado(): boolean {
+    if (this.token.length > 5) {
+      return true;
+    }
+    if (this.isBrowser) {
+      const token = localStorage.getItem('token');
+      if (token && token.length > 5) {
+        this.token = token;
+        return true;
+      }
+    }
+    return false;
   }
 
   cargarStorage() {
@@ -38,7 +53,7 @@ export class UsuarioService {
 
   login(usuario: Usuario, recuerdame: boolean): Observable<any> {
     const url = `${URL_SERVICIOS}/auth/login`;
-    
+
     const body = {
       email: usuario.email,
       password: usuario.password
@@ -58,11 +73,11 @@ export class UsuarioService {
             } else {
               localStorage.removeItem('email');
             }
-            
+
             localStorage.setItem('token', resp.token);
             localStorage.setItem('usuario', JSON.stringify(resp.usuario));
           }
-          
+
           this.token = resp.token;
           this.usuario = resp.usuario;
         }
@@ -70,19 +85,24 @@ export class UsuarioService {
     );
   }
 
+  // guardando informacion del token en el localStorage
+  guardarStorage(id: string, token: string, usuario: Usuario) {
+    localStorage.setItem('id', id);
+    localStorage.setItem('token', token);
+    localStorage.setItem('usuario', JSON.stringify(usuario));
+    this.usuario = usuario;
+    this.token = token;
+  }
+
   logout() {
     this.usuario = null;
     this.token = '';
-    
+
     if (this.isBrowser) {
       localStorage.removeItem('token');
       localStorage.removeItem('usuario');
       localStorage.removeItem('email');
     }
-  }
-
-  estaLogueado(): boolean {
-    return this.token.length > 5;
   }
 
   guardarUsuario(usuario: Usuario, fecha?: Fecha): Observable<any> {
@@ -112,27 +132,27 @@ export class UsuarioService {
     }
   }
 
-  cargarUsuarios(): Observable<any> {
-    const url = URL_SERVICIOS + '/usuario';
+  cargarUsuarios() {
+    const url = URL_SERVICIOS + '/usuarios';
     return this.http.get(url);
   }
 
   cargarUsuario(id: string): Observable<any> {
-    const url = URL_SERVICIOS + '/usuario/' + id;
+    const url = URL_SERVICIOS + '/usuarios/' + id;
     return this.http.get(url).pipe(
       map((resp: any) => resp.usuario)
     );
   }
 
   buscarUsuarios(termino: string): Observable<Usuario[]> {
-    const url = URL_SERVICIOS + '/busqueda/colleccion/usuarios/' + termino;
+    const url = URL_SERVICIOS + '/usuarios/busqueda' + termino;
     return this.http.get(url).pipe(
       map((resp: any) => resp.usuarios)
     );
   }
 
   desactivarUsuario(usuario: Usuario): Observable<any> {
-    let url = URL_SERVICIOS + '/usuario/delete/' + usuario.idUsuario;
+    let url = URL_SERVICIOS + '/usuarios/delete/' + usuario.idUsuario;
     url += '?token=' + this.token;
 
     return this.http.put(url, usuario).pipe(
