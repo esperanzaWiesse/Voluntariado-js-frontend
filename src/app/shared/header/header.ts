@@ -7,16 +7,16 @@ import { UsuarioService } from '../../service/usuario.service';
   templateUrl: './header.html',
   styleUrl: './header.css',
   standalone: true,
-  imports: [RouterOutlet, RouterLink]
+  imports: [RouterLink]
 })
 export class Header {
   constructor(
-      private router: Router,
-      private usuarioService: UsuarioService
-    ) {}
+    private router: Router,
+    private usuarioService: UsuarioService
+  ) { }
 
-    logout(): void {
-      this.usuarioService.logout();
-      this.router.navigate(['/login']);
-    }
+  logout(): void {
+    this.usuarioService.logout();
+    this.router.navigate(['/login']);
+  }
 }

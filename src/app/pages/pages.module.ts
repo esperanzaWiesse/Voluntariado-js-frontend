@@ -5,22 +5,19 @@ import { PAGES_ROUTES } from './pages.routes';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
-import { Dashboard} from './dashboard/dashboard';
+import { Dashboard } from './dashboard/dashboard';
 import { Pages } from './pages';
 
 // paginacion
 // import {NgxPaginationModule} from 'ngx-pagination';
 
-import {Usuarios} from './usuario/usuarios';
+import { Usuarios } from './usuario/usuarios';
 
 
 
 
 @NgModule({
     declarations: [
-        Pages,
-        Dashboard,
-        Usuarios,
     ],
     exports: [
         Dashboard,
@@ -30,7 +27,10 @@ import {Usuarios} from './usuario/usuarios';
         PAGES_ROUTES,
         FormsModule,
         CommonModule,
-        // NgxPaginationModule
+        // NgxPaginationModule,
+        Pages,
+        Dashboard,
+        Usuarios
     ]
 })
 

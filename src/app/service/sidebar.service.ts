@@ -27,7 +27,7 @@ export class SidebarService {
       submenu: [
         {
           titulo: 'Dashboard',
-          url: '/dashboard',
+          url: '/pages/dashboard',
           roles: ['ADMIN', 'VISITANTE']
         }
       ]
@@ -39,12 +39,12 @@ export class SidebarService {
       submenu: [
         {
           titulo: 'Inscripciones',
-          url: '/preinscripciones',
+          url: '/pages/preinscripciones',
           roles: ['ADMIN'] // Solo admin
         },
         {
           titulo: 'Administracion de grupos ',
-          url: '/inscripciones',
+          url: '/pages/inscripciones',
           roles: ['ADMIN', 'VISITANTE'] // Ambos
         }
       ]
@@ -54,10 +54,10 @@ export class SidebarService {
       icono: 'mdi mdi-folder-lock-open',
       roles: ['ADMIN'], // Solo admin ve este menú completo
       submenu: [
-        { titulo: 'Usuarios', url: '/pages/usuario', roles: ['ADMIN'] },
-        { titulo: 'Cargos', url: '/cargos', roles: ['ADMIN'] },
-        { titulo: 'Tipos Grupo Gupos de Voluntarios', url: '/tipos-grupo-voluntarios', roles: ['ADMIN'] },
-        { titulo: 'Actividades', url: '/actividades', roles: ['ADMIN'] }
+        { titulo: 'Usuarios', url: '/pages/usuarios', roles: ['ADMIN'] },
+        { titulo: 'Cargos', url: '/pages/cargos', roles: ['ADMIN'] },
+        { titulo: 'Tipos Grupo Gupos de Voluntarios', url: '/pages/tipos-grupo-voluntarios', roles: ['ADMIN'] },
+        { titulo: 'Actividades', url: '/pages/actividades', roles: ['ADMIN'] }
       ]
     }
   ];

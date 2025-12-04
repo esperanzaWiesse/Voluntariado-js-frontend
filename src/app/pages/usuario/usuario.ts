@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-usuario',
-  standalone: false,
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './usuario.html',
   styleUrl: './usuario.css',
 })
