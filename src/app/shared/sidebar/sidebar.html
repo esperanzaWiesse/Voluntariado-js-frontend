@@ -10,7 +10,7 @@
         </div>
         <div class="text-white">
           <p class="text-sm font-semibold">{{ usuario?.nombre || 'Usuario' }}</p>
-          <p class="text-xs opacity-90">{{ usuario?.rol || 'Sin rol' }}</p>
+          <p class="text-xs opacity-90">Rol: {{ usuario?.rol || 'Sin rol' }}</p>
         </div>
       </div>
     </div>
@@ -20,11 +20,9 @@
       <ul class="space-y-2">
         <li *ngFor="let menuItem of menu" class="px-4">
           <!-- Menú Principal -->
-          <button
-            (click)="toggleMenu(menuItem)"
+          <button (click)="toggleMenu(menuItem)"
             class="w-full flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-all duration-200 group"
-            [attr.aria-expanded]="menuItem.expanded"
-          >
+            [attr.aria-expanded]="menuItem.expanded">
             <div class="flex items-center space-x-3">
               <i [class]="menuItem.icono + ' text-lg'"></i>
               <span class="font-medium">{{ menuItem.titulo }}</span>
@@ -33,40 +31,27 @@
               <span class="bg-blue-600 text-white text-xs font-semibold px-2.5 py-1 rounded-full">
                 {{ menuItem.submenu.length }}
               </span>
-              <svg
-                class="w-4 h-4 transition-transform duration-200"
-                [class.rotate-180]="menuItem.expanded"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
+              <svg class="w-4 h-4 transition-transform duration-200" [class.rotate-180]="menuItem.expanded" fill="none"
+                stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
             </div>
           </button>
 
           <!-- Submenú -->
-          <ul
-            class="mt-2 ml-4 space-y-1 overflow-hidden transition-all duration-300"
-            [class.max-h-0]="!menuItem.expanded"
-            [class.max-h-96]="menuItem.expanded"
-            [attr.aria-expanded]="menuItem.expanded"
-          >
+          <ul class="mt-2 ml-4 space-y-1 overflow-hidden transition-all duration-300"
+            [class.max-h-0]="!menuItem.expanded" [class.max-h-96]="menuItem.expanded"
+            [attr.aria-expanded]="menuItem.expanded">
             <li *ngFor="let submenu of menuItem.submenu">
-              <a
-                *ngIf="submenu.url"
+              <a *ngIf="submenu.url"
                 routerLinkActive="bg-blue-100 text-blue-700 font-semibold border-l-4 border-blue-600"
                 [routerLink]="[submenu.url]"
-                class="block px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-100 hover:text-gray-900 rounded-md transition-colors duration-150 border-l-4 border-transparent"
-              >
+                class="block px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-100 hover:text-gray-900 rounded-md transition-colors duration-150 border-l-4 border-transparent">
                 {{ submenu.titulo }}
               </a>
-              
+
               <!-- Si no tiene URL, mostrar como texto (opcional) -->
-              <span
-                *ngIf="!submenu.url"
-                class="block px-4 py-2.5 text-sm text-gray-400 cursor-not-allowed"
-              >
+              <span *ngIf="!submenu.url" class="block px-4 py-2.5 text-sm text-gray-400 cursor-not-allowed">
                 {{ submenu.titulo }} (Próximamente)
               </span>
             </li>

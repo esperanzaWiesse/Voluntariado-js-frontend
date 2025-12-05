@@ -110,9 +110,7 @@ export class UsuarioService {
 
     if (usuario.idUsuario) {
       // actualizando
-      console.log('actualizando usuario');
       url += '/' + usuario.idUsuario;
-      console.log(url);
 
       return this.http.put(url, usuario, {
         headers: {
@@ -125,7 +123,6 @@ export class UsuarioService {
         })
       );
     } else {
-      console.log('creando usuario');
       // creando
       return this.http.post(url, { ...usuario }, {
         headers: {
@@ -133,8 +130,6 @@ export class UsuarioService {
         }
       }).pipe(
         map((resp: any) => {
-          console.log('creando usuario');
-          console.log(resp);
           Swal.fire('Usuario Creado', usuario.nombre, 'success');
           return resp.usuario;
         })

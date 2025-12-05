@@ -26,8 +26,9 @@ export class UsuarioUpdate {
     dni: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
-    codUniversitario: [''],
-    tipoCodUniversitario: ['']
+    codUniversitario: ['', Validators.required],
+    tipoCodUniversitario: ['', Validators.required],
+    rol: ['', Validators.required]
   });
 
   constructor(
@@ -87,9 +88,18 @@ export class UsuarioUpdate {
       }
     }
 
-    // Enviar al servicio
-    this._usuarioService.guardarUsuario(usuario);
+    console.log(usuario);
 
-    this.router.navigate(['/pages/usuarios']);
+    // Enviar al servicio
+    this._usuarioService.guardarUsuario(usuario)
+      .subscribe({
+        next: (resp) => {
+          this.router.navigate(['/pages/usuarios']);
+        },
+        error: (err) => {
+          console.log(`error rrrr: ${err.error.errores[0]}`);
+          Swal.fire('Error', `${err.error.errores[0]}`, 'error');
+        }
+      });
   }
 }

@@ -79,6 +79,11 @@
                                             {{ usuario.nombre }} {{ usuario.apPaterno }} {{ usuario.apMaterno }}
                                         </div>
                                         <div class="text-xs text-gray-500">ID: {{ usuario.idUsuario }}</div>
+                                        <!-- <div class="text-xs text-orange-400">Rol: {{ usuario.rol }}</div> -->
+                                        <div class="text-xs"
+                                            [ngClass]="usuario.rol === 'ADMIN' ? 'text-orange-400' : 'text-emerald-600'">
+                                            Rol: {{ usuario.rol }}
+                                        </div>
                                     </div>
                                 </div>
                             </td>
@@ -97,7 +102,7 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div *ngIf="usuario.codUniversitario" class="text-sm">
                                     <div class="text-gray-900 font-medium">{{ usuario.codUniversitario }}</div>
-                                    <div class="text-xs text-gray-500">Tipo:{{ usuario.tipoCodUniversitario }}</div>
+                                    <div class="text-xs text-emerald-600">Tipo:{{ usuario.tipoCodUniversitario }}</div>
                                 </div>
                                 <span *ngIf="!usuario.codUniversitario" class="text-sm text-gray-400">-</span>
                             </td>
