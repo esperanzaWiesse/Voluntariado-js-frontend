@@ -105,26 +105,36 @@ export class UsuarioService {
     }
   }
 
-  guardarUsuario(usuario: Usuario, fecha?: Fecha): Observable<any> {
-    let url = URL_SERVICIOS + '/usuario';
+  guardarUsuario(usuario: Usuario): Observable<any> {
+    let url = URL_SERVICIOS + '/usuarios';
 
     if (usuario.idUsuario) {
       // actualizando
+      console.log('actualizando usuario');
       url += '/' + usuario.idUsuario;
-      url += '?token=' + this.token;
+      console.log(url);
 
-      return this.http.put(url, usuario).pipe(
+      return this.http.put(url, usuario, {
+        headers: {
+          'x-token': this.token
+        }
+      }).pipe(
         map((resp: any) => {
           Swal.fire('Usuario Actualizado', usuario.nombre, 'success');
           return resp.usuario;
         })
       );
     } else {
+      console.log('creando usuario');
       // creando
-      url += '?token=' + this.token;
-
-      return this.http.post(url, [usuario, fecha]).pipe(
+      return this.http.post(url, { ...usuario }, {
+        headers: {
+          'x-token': this.token
+        }
+      }).pipe(
         map((resp: any) => {
+          console.log('creando usuario');
+          console.log(resp);
           Swal.fire('Usuario Creado', usuario.nombre, 'success');
           return resp.usuario;
         })
@@ -134,28 +144,42 @@ export class UsuarioService {
 
   cargarUsuarios() {
     const url = URL_SERVICIOS + '/usuarios';
-    return this.http.get(url);
+    return this.http.get(url, {
+      headers: {
+        'x-token': this.token
+      }
+    });
   }
 
   cargarUsuario(id: string): Observable<any> {
     const url = URL_SERVICIOS + '/usuarios/' + id;
-    return this.http.get(url).pipe(
-      map((resp: any) => resp.usuario)
+    return this.http.get(url, {
+      headers: {
+        'x-token': this.token
+      }
+    }).pipe(
+      map((resp: any) => resp.usuarios[0])
     );
   }
 
   buscarUsuarios(termino: string): Observable<Usuario[]> {
     const url = URL_SERVICIOS + '/usuarios/busqueda' + termino;
-    return this.http.get(url).pipe(
-      map((resp: any) => resp.usuarios)
+    return this.http.get(url, {
+      headers: {
+        'x-token': this.token
+      }
+    }).pipe(
+      map((resp: any) => resp.usuarios),
     );
   }
 
   desactivarUsuario(usuario: Usuario): Observable<any> {
     let url = URL_SERVICIOS + '/usuarios/delete/' + usuario.idUsuario;
-    url += '?token=' + this.token;
-
-    return this.http.put(url, usuario).pipe(
+    return this.http.put(url, usuario, {
+      headers: {
+        'x-token': this.token
+      }
+    }).pipe(
       map((resp: any) => {
         Swal.fire('Usuario Desactivado', usuario.nombre, 'success');
         return resp;

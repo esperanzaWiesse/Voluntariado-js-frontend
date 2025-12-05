@@ -1,13 +1,13 @@
 // import { Component } from '@angular/core';
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 import Swal from 'sweetalert2';
 
 import { Usuario } from '../../models/ususario.model';
-import { UsuarioService } from '../../service/usuario.service';
+import { UsuarioService } from '../../service/service.index';
 
 @Component({
   selector: 'app-usuarios',
@@ -22,6 +22,8 @@ export class Usuarios implements OnInit {
   p: number = 1;
   cargando: boolean = true;
 
+  private cdr = inject(ChangeDetectorRef);
+
   constructor(public usuarioService: UsuarioService) { }
 
   ngOnInit(): void {
@@ -33,9 +35,28 @@ export class Usuarios implements OnInit {
     this.usuarioService.cargarUsuarios()
       .subscribe({
         next: (resp: any) => {
-          console.log(resp);
+          // console.log('Respuesta del servicio:', resp);
           this.usuarios = resp.usuarios || [];
+
+          // Normalizar datos para evitar errores de tipeo y visualización
+          this.usuarios = this.usuarios.map(u => {
+            const original = u.tipoCodUniversitario;
+            const normalized = u.tipoCodUniversitario?.toLowerCase().trim() || '';
+
+            if (normalized === 'estudante' || normalized === 'estudiante') {
+              u.tipoCodUniversitario = 'Estudiante';
+            } else if (normalized === 'administrador' || normalized === 'administrativo' || normalized.includes('admin')) {
+              u.tipoCodUniversitario = 'Administrativo';
+            } else if (normalized === 'docente') {
+              u.tipoCodUniversitario = 'Docente';
+            } else if (normalized === 'invitado') {
+              u.tipoCodUniversitario = 'Invitado';
+            }
+            return u;
+          });
+
           this.totalRegistros = this.usuarios.length;
+          this.cdr.detectChanges();
           // this.cargando = false;
         },
         error: (err) => {
