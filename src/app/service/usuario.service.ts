@@ -170,7 +170,7 @@ export class UsuarioService {
 
   desactivarUsuario(usuario: Usuario): Observable<any> {
     let url = URL_SERVICIOS + '/usuarios/delete/' + usuario.idUsuario;
-    return this.http.put(url, usuario, {
+    return this.http.delete(url, {
       headers: {
         'x-token': this.token
       }

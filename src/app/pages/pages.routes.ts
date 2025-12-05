@@ -6,6 +6,8 @@ import { Pages } from './pages';
 import { Dashboard } from './dashboard/dashboard';
 import { UsuarioUpdate } from './usuario/usuario';
 import { Usuarios } from './usuario/usuarios';
+import { Cargo } from './cargo/cargo';
+import { CargoUpadate } from './cargo/cargo-upadate';
 
 export const pagesRoutes: Routes = [
   {
@@ -19,6 +21,11 @@ export const pagesRoutes: Routes = [
       // Usuarios
       { path: 'usuarios', component: Usuarios, data: { titulo: 'Mantenimiento de usuarios' } },
       { path: 'usuario/:id', component: UsuarioUpdate, data: { titulo: 'Usuario' } },
+
+      // Cargo
+      { path: 'cargos', component: Cargo, data: { titulo: 'Mantenimiento de cargos' } },
+      { path: 'cargo/:id', component: CargoUpadate, data: { titulo: 'Cargo' } },
+
 
     ]
   }
