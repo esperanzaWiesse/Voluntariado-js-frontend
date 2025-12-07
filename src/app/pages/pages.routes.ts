@@ -12,6 +12,8 @@ import { Actividad } from './actividad/actividad';
 import { ActividadUpdate } from './actividad/actividad-update';
 import { AdminGrupos } from './adminGrupos/admin-grupos';
 import { AdminGruposUpadate } from './adminGrupos/admin-grupos-upadate';
+import { Inscripciones } from './inscripciones/inscripciones';
+import { InscripcionesUpdate } from './inscripciones/inscripciones-update';
 
 
 export const pagesRoutes: Routes = [
@@ -39,6 +41,9 @@ export const pagesRoutes: Routes = [
       { path: 'admin-grupos', component: AdminGrupos, data: { titulo: 'Administración de grupos' } },
       { path: 'admin-grupo/:id', component: AdminGruposUpadate, data: { titulo: 'Grupos de Voluntariado' } },
 
+      // Inscripciones
+      { path: 'inscripciones', component: Inscripciones, data: { titulo: 'Gestión de Inscripciones' } },
+      { path: 'inscripcion/:id', component: InscripcionesUpdate, data: { titulo: 'Inscripcion' } },
     ]
   }
 ];

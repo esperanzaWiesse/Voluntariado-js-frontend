@@ -50,11 +50,14 @@ export class ActividadService {
     );
   }
 
-  desactivarActividad(actividad: ActividadModel): Observable<any> {
-    const url = URL_SERVICIOS + '/actividades/delete/' + actividad.idActi;
+  desactivarActividad(idGrupo: string, actividad: ActividadModel): Observable<any> {
+    // Cambiar estado
+    actividad.activo = !actividad.activo;
+    let url = URL_SERVICIOS + `/actividades/grupo/${idGrupo}/actividad/` + actividad.idActi;
+
     return this.http.delete(url).pipe(
       map((resp: any) => {
-        Swal.fire('Actividad Desactivada', actividad.nombre, 'success');
+        Swal.fire('Estado Actualizado', actividad.nombre, 'success');
         return resp;
       })
     );

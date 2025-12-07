@@ -80,7 +80,7 @@ export class Actividad implements OnInit {
       buttonsStyling: false
     }).then((result) => {
       if (result.isConfirmed) {
-        this.actividadService.desactivarActividad(actividad)
+        this.actividadService.desactivarActividad(this.idGrupoVoluntariado!, actividad)
           .subscribe({
             next: () => {
               this.cargarActividades();
