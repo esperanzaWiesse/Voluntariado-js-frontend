@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -16,6 +16,7 @@ import { ActividadModel } from '../../models/actividad.model';
 })
 export class ActividadUpdate implements OnInit {
   fb = inject(FormBuilder);
+  private cdr = inject(ChangeDetectorRef);
   actividadSeleccionada?: ActividadModel;
   formActividad = this.fb.group({
     nombre: ['', Validators.required],
@@ -61,6 +62,7 @@ export class ActividadUpdate implements OnInit {
       }
 
       this.formActividad.patchValue(actividad);
+      this.cdr.detectChanges();
     });
   }
 

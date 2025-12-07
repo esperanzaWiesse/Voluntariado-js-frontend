@@ -10,8 +10,8 @@ import Swal from 'sweetalert2';
   providedIn: 'root'
 })
 export class ActividadService {
-  
-  constructor(private http: HttpClient) {}
+
+  constructor(private http: HttpClient) { }
 
   guardarActividad(actividad: ActividadModel): Observable<any> {
     let url = URL_SERVICIOS + '/actividades';
@@ -46,7 +46,7 @@ export class ActividadService {
   cargarActividad(id: string): Observable<any> {
     const url = URL_SERVICIOS + '/actividades/' + id;
     return this.http.get(url).pipe(
-      map((resp: any) => resp.actividades[0])
+      map((resp: any) => resp.actividad || resp.actividades[0])
     );
   }
 
