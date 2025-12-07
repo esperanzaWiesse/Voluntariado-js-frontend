@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms'; // Necesario para ngModel
@@ -25,7 +25,8 @@ export class Inscripciones implements OnInit {
 
   constructor(
     private inscripcionService: InscripcionService,
-    private grupoService: GrupoVoluntariadoService
+    private grupoService: GrupoVoluntariadoService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -34,7 +35,9 @@ export class Inscripciones implements OnInit {
 
   cargarGrupos() {
     this.grupoService.cargarGrupoVoluntariados().subscribe((resp: any) => {
-      this.grupos = resp.grupoVoluntarios || resp;
+      const grupos = resp.grupoVoluntarios || resp;
+      this.grupos = grupos.filter((g: any) => g.activo);
+      this.cdr.detectChanges(); // Forzar actualización de vista
     });
   }
 
@@ -46,11 +49,13 @@ export class Inscripciones implements OnInit {
 
     this.inscripcionService.obtenerMiembros(this.grupoSeleccionadoId).subscribe({
       next: (resp: any) => {
-        this.miembros = resp.miembros || resp; // Ajustar según respuesta del backend
+        this.miembros = resp.miembros || resp;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error(err);
         this.miembros = [];
+        this.cdr.detectChanges();
       }
     });
   }

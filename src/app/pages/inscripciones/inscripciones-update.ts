@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -37,7 +37,8 @@ export class InscripcionesUpdate implements OnInit {
     private usuarioService: UsuarioService,
     private cargoService: CargoService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) {
     this.formInscripcion = this.fb.group({
       idGrupoVoluntariado: ['', Validators.required],
@@ -56,16 +57,19 @@ export class InscripcionesUpdate implements OnInit {
     this.grupoService.cargarGrupoVoluntariados().subscribe((resp: any) => {
       const grupos = resp.grupoVoluntarios || resp;
       this.grupos = grupos.filter((g: any) => g.activo);
+      this.cdr.detectChanges();
     });
 
     this.usuarioService.cargarUsuarios().subscribe((resp: any) => {
       const usuarios = resp.usuarios || resp;
       this.usuarios = usuarios.filter((u: any) => u.activo);
+      this.cdr.detectChanges();
     });
 
     this.cargoService.cargarCargos().subscribe((resp: any) => {
       const cargos = resp.cargos || resp;
       this.cargos = cargos.filter((c: any) => c.activo);
+      this.cdr.detectChanges();
     });
   }
 

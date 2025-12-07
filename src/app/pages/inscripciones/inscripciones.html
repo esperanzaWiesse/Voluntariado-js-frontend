@@ -29,8 +29,8 @@
                         <th class="py-3 px-6 text-center">Email</th>
                         <th class="py-3 px-6 text-center">Cargo</th>
                         <th class="py-3 px-6 text-center">Fecha Inscripción</th>
-                        <th class="py-3 px-6 text-center">Estado</th>
-                        <th class="py-3 px-6 text-center">Acciones</th>
+                        <th class="py-3 px-6 text-center">Estado en la plataforma</th>
+                        <th class="py-3 px-6 text-center">¿Dar de baja? </th>
                     </tr>
                 </thead>
                 <tbody class="text-gray-700 text-sm font-light">
@@ -39,15 +39,16 @@
 
                         <!-- Ajustar propiedades 'miembro.Usuario.nombre' segun respuesta real del backend -->
                         <td class="py-3 px-6 text-center whitespace-nowrap">
-                            <span class="font-medium">{{ miembro.Usuario?.nombre || 'Usuario ' + miembro.idUsuario
-                                }}</span>
+                            <span class="font-medium">
+                                {{ miembro.nombreUsuario }} {{ miembro.apPaterno }} {{ miembro.apMaterno }}
+                            </span>
                         </td>
                         <td class="py-3 px-6 text-center">
-                            {{ miembro.Usuario?.email || '-' }}
+                            {{ miembro.email || '-' }}
                         </td>
-                        <td class="py-3 px-6 text-center">
+                        <td class="py-3 px-6 text-center whitespace-nowrap">
                             <span class="bg-blue-200 text-blue-800 py-1 px-3 rounded-full text-xs">
-                                {{ miembro.Cargo?.nombreCargo || 'Cargo ' + miembro.idCargo }}
+                                {{ miembro.nombreCargo || 'Cargo ' + miembro.idCargo }}
                             </span>
                         </td>
                         <td class="py-3 px-6 text-center">

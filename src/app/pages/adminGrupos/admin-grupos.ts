@@ -18,6 +18,7 @@ import { GrupoVoluntariadoService } from '../../service/service.index';
 export class AdminGrupos implements OnInit {
 
   grupoVoluntariados: GrupoVoluntariadoModel[] = [];
+  grupoVoluntariadosTemp: GrupoVoluntariadoModel[] = []; // Copia para el filtro
   totalRegistros: number = 0;
   p: number = 1;
   cargando: boolean = true;
@@ -37,8 +38,9 @@ export class AdminGrupos implements OnInit {
           if (resp.grupoVoluntario) {
             this.grupoVoluntariados = [resp.grupoVoluntario];
           } else {
-            this.grupoVoluntariados = resp.grupoVoluntariados || [];
+            this.grupoVoluntariados = resp.grupoVoluntarios || [];
           }
+          this.grupoVoluntariadosTemp = this.grupoVoluntariados; // Guardar referencia completa
           this.totalRegistros = this.grupoVoluntariados.length;
           this.cdr.detectChanges();
         },
@@ -60,14 +62,14 @@ export class AdminGrupos implements OnInit {
     termino = termino.trim().toLowerCase();
 
     if (termino.length === 0) {
-      this.cargarGrupoVoluntariado();
+      this.grupoVoluntariados = this.grupoVoluntariadosTemp;
       return;
     }
 
-    this.grupoVoluntariados = this.grupoVoluntariados.filter(u =>
+    this.grupoVoluntariados = this.grupoVoluntariadosTemp.filter(u =>
       `${u.nombreGrupoVoluntariado}`.toLowerCase().includes(termino) ||
-      u.maxMiembros?.toString().includes(termino) ||
-      u.idGrupoVoluntariado?.toLowerCase().includes(termino)
+      (u.maxMiembros && u.maxMiembros.toString().includes(termino)) ||
+      (u.idGrupoVoluntariado && u.idGrupoVoluntariado.toString().toLowerCase().includes(termino))
     );
   }
 

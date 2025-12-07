@@ -4,4 +4,9 @@ export interface Inscripcion {
     idCargo: number;
     fechaInscripcion?: string;
     activo?: boolean;
+    nombreUsuario?: string;
+    apPaterno?: string;
+    apMaterno?: string;
+    email?: string;
+    nombreCargo?: string;
 }

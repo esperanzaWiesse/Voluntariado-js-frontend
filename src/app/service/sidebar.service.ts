@@ -56,7 +56,7 @@ export class SidebarService {
       submenu: [
         { titulo: 'Usuarios', url: '/pages/usuarios', roles: ['ADMIN'] },
         { titulo: 'Cargos', url: '/pages/cargos', roles: ['ADMIN'] },
-        { titulo: 'Actividades', url: '/pages/actividades', roles: ['ADMIN'] },
+        // { titulo: 'Actividades', url: '/pages/actividades', roles: ['ADMIN'] },
       ]
     }
   ];
