@@ -39,12 +39,12 @@ export class SidebarService {
       submenu: [
         {
           titulo: 'Inscripciones',
-          url: '/pages/preinscripciones',
-          roles: ['ADMIN'] // Solo admin
+          url: '/pages/inscripciones',
+          roles: ['ADMIN', 'VISITANTE'] // Solo admin
         },
         {
           titulo: 'Administracion de grupos ',
-          url: '/pages/inscripciones',
+          url: '/pages/admin-grupos',
           roles: ['ADMIN', 'VISITANTE'] // Ambos
         }
       ]
@@ -57,7 +57,6 @@ export class SidebarService {
         { titulo: 'Usuarios', url: '/pages/usuarios', roles: ['ADMIN'] },
         { titulo: 'Cargos', url: '/pages/cargos', roles: ['ADMIN'] },
         { titulo: 'Actividades', url: '/pages/actividades', roles: ['ADMIN'] },
-        { titulo: 'Tipos Grupo Gupos de Voluntarios', url: '/pages/tipos-grupo-voluntarios', roles: ['ADMIN'] }
       ]
     }
   ];

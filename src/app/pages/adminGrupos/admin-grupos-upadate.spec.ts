@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GrupoVoluntario } from './grupo-voluntario';
+import { AdminGruposUpadate } from './admin-grupos-upadate';
 
-describe('GrupoVoluntario', () => {
-  let component: GrupoVoluntario;
-  let fixture: ComponentFixture<GrupoVoluntario>;
+describe('AdminGruposUpadate', () => {
+  let component: AdminGruposUpadate;
+  let fixture: ComponentFixture<AdminGruposUpadate>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GrupoVoluntario]
+      imports: [AdminGruposUpadate]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(GrupoVoluntario);
+    fixture = TestBed.createComponent(AdminGruposUpadate);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

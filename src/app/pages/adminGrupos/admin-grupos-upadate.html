@@ -1,0 +1,107 @@
+<div class="max-w-4xl mx-auto bg-white shadow-xl rounded-xl p-8 mt-10">
+
+    <!-- Título -->
+    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+        Registrar Grupo de Voluntariado
+    </h2>
+
+    <form [formGroup]="formGrupo" (ngSubmit)="guardarGrupo()">
+
+        <!-- GRID DE 2 COLUMNAS -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- Nombre -->
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Nombre</label>
+                <input type="text" formControlName="nombreGrupoVoluntariado"
+                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                    placeholder="Ingrese nombre" />
+                <p *ngIf="formGrupo.get('nombreGrupoVoluntariado')?.invalid && formGrupo.get('nombreGrupoVoluntariado')?.touched"
+                    class="text-red-500 text-sm mt-1">
+                    El nombre es obligatorio.
+                </p>
+            </div>
+
+            <!-- fechaCreacion -->
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Fecha de Creación</label>
+                <input type="date" formControlName="fechaCreacionGrupoVoluntariado"
+                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" />
+                <p *ngIf="formGrupo.get('fechaCreacionGrupoVoluntariado')?.invalid && formGrupo.get('fechaCreacionGrupoVoluntariado')?.touched"
+                    class="text-red-500 text-sm mt-1">
+                    La fecha es obligatoria.
+                </p>
+            </div>
+
+            <!-- Duracion-Horas -->
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Duracion en Horas</label>
+                <input type="number" formControlName="duracionHoras"
+                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                    placeholder="Ingrese duración en horas" />
+                <p *ngIf="formGrupo.get('duracionHoras')?.invalid && formGrupo.get('duracionHoras')?.touched"
+                    class="text-red-500 text-sm mt-1">
+                    La duración en horas es obligatoria.
+                </p>
+            </div>
+
+            <!-- Duracion-Dias -->
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Duracion en Días</label>
+                <input type="number" formControlName="duracionDias"
+                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                    placeholder="Ingrese duración en días" />
+                <p *ngIf="formGrupo.get('duracionDias')?.invalid && formGrupo.get('duracionDias')?.touched"
+                    class="text-red-500 text-sm mt-1">
+                    La duración en días es obligatoria.
+                </p>
+            </div>
+
+            <!-- Max-Miembros -->
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Maximo de Miembros</label>
+                <input type="number" formControlName="maxMiembros"
+                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                    placeholder="Ingrese máximo de miembros" />
+                <p *ngIf="formGrupo.get('maxMiembros')?.invalid && formGrupo.get('maxMiembros')?.touched"
+                    class="text-red-500 text-sm mt-1">
+                    El máximo de miembros es obligatorio.
+                </p>
+            </div>
+
+            <!-- Descripción -->
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Descripción</label>
+                <textarea formControlName="descripcion" rows="4"
+                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none resize-none overflow-y-auto"
+                    placeholder="Ingrese descripción"></textarea>
+                <p *ngIf="formGrupo.get('descripcion')?.invalid && formGrupo.get('descripcion')?.touched"
+                    class="text-red-500 text-sm mt-1">
+                    La descripción es obligatoria.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Botones centrados -->
+        <div class="flex justify-center gap-6 mt-10">
+
+            <button [routerLink]="['/pages/admin-grupos']" type="button"
+                class="px-8 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow">
+                Cancelar
+            </button>
+
+            <button type="submit" [disabled]="formGrupo.invalid"
+                class="px-8 py-3 rounded-lg text-white font-semibold shadow transition disabled:opacity-50 disabled:cursor-not-allowed"
+                style="background-color: #2A7FFF;">
+                Guardar
+            </button>
+
+        </div>
+
+    </form>
+
+    <div>
+        <!-- <app-actividad></app-actividad> -->
+    </div>
+</div>
