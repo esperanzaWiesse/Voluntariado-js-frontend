@@ -76,13 +76,19 @@
                             </td>
 
                             <!-- Descripdion -->
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <!-- <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm text-gray-900 font-medium">{{ cargo.descripcion }}</div>
+                            </td> -->
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900 font-medium" 
+                                    [title]="cargo.descripcion">
+                                    {{ truncateWords(cargo.descripcion, 7) }}
+                                </div>
                             </td>
 
                             <!-- Fecha de creación -->
                             <td class="px-6 py-4">
-                                <div class="text-sm text-gray-900">{{ cargo.fechaCreacion }}</div>
+                                <div class="text-sm text-gray-900">{{ cargo.fechaCreacion | date:'dd/MM/yyyy' }}</div>
                             </td>
 
                             <!-- Botón editar -->

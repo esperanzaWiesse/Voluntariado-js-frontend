@@ -28,7 +28,7 @@ export class CargoUpadate implements OnInit {
   ngOnInit() {
   const hoy = new Date().toISOString().substring(0, 10);
   this.formCargo.get('fechaCreacion')?.setValue(hoy);
-}
+  }
 
   constructor(
     public _cargoService: CargoService,
@@ -48,12 +48,14 @@ export class CargoUpadate implements OnInit {
   cargarCargo(id: string) {
     this._cargoService.cargarCargo(id).subscribe(cargo => {
       this.cargoSeleccionado = cargo;
+
+       // Convertir la fecha ISO a formato yyyy-MM-dd para el input type="date"
+      if (cargo.fechaCreacion) {
+        const fechaFormateada = new Date(cargo.fechaCreacion).toISOString().substring(0, 10);
+        cargo.fechaCreacion = fechaFormateada;
+      }
+
        this.formCargo.patchValue(cargo);
-      // this.formCargo.patchValue({
-      //   nombreCargo: cargo.nombreCargo,
-      //   descripcion: cargo.descripcion,
-      //   fechaCreacion: cargo.fechaCreacion
-      // });
     });
   }
 

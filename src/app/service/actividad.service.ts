@@ -9,14 +9,14 @@ import Swal from 'sweetalert2';
 @Injectable({
   providedIn: 'root'
 })
-export class CargoService {
+export class ActividadService {
   
   constructor(private http: HttpClient) {}
 
   guardarActividad(actividad: ActividadModel): Observable<any> {
     let url = URL_SERVICIOS + '/actividades';
 
-    console.log(actividad);
+    console.log(actividad.idActi);
 
     if (actividad.idActi) {
       // actualizando
@@ -38,23 +38,23 @@ export class CargoService {
     }
   }
 
-  cargarCargos(): Observable<any> {
+  cargarActividades(): Observable<any> {
     const url = URL_SERVICIOS + '/actividades';
     return this.http.get(url);
   }
 
-  cargarCargo(id: string): Observable<any> {
+  cargarActividad(id: string): Observable<any> {
     const url = URL_SERVICIOS + '/actividades/' + id;
     return this.http.get(url).pipe(
       map((resp: any) => resp.actividades[0])
     );
   }
 
-  desactivarCargo(cargo: ActividadModel): Observable<any> {
-    const url = URL_SERVICIOS + '/actividades/delete/' + cargo.idActi;
+  desactivarActividad(actividad: ActividadModel): Observable<any> {
+    const url = URL_SERVICIOS + '/actividades/delete/' + actividad.idActi;
     return this.http.delete(url).pipe(
       map((resp: any) => {
-        Swal.fire('Actividad Desactivada', cargo.nombre, 'success');
+        Swal.fire('Actividad Desactivada', actividad.nombre, 'success');
         return resp;
       })
     );

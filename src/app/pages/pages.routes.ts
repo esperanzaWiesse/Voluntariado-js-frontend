@@ -9,8 +9,9 @@ import { Usuarios } from './usuario/usuarios';
 import { Cargo } from './cargo/cargo';
 import { CargoUpadate } from './cargo/cargo-upadate';
 import { Actividad } from './actividad/actividad';
-// import { ActividadUpdate } from './actividad/actividad-update';
+import { ActividadUpdate } from './actividad/actividad-update';
 import { GrupoVoluntario } from './grupo-voluntario/grupo-voluntario';
+
 
 export const pagesRoutes: Routes = [
   {
@@ -31,7 +32,7 @@ export const pagesRoutes: Routes = [
 
       // Actividades
       { path: 'actividades', component: Actividad, data: { titulo: 'Mantenimiento de actividades' } },
-      // { path: 'actividad/:id', component: CargoUpadate, data: { titulo: 'Actividad' } },
+      { path: 'actividad/:id', component: ActividadUpdate, data: { titulo: 'Actividad' } },
 
       // Tipos Grupo Gupos de Voluntarios
       { path: 'tipos-grupo-voluntarios', component: GrupoVoluntario, data: { titulo: 'Mantenimiento de tipos de grupo de voluntarios' } },
