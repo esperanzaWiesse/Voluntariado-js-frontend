@@ -7,11 +7,12 @@ import Swal from 'sweetalert2';
 import { GrupoVoluntariadoModel } from '../../models/grupoVoluntariado.model';
 import { GrupoVoluntariadoService } from '../../service/service.index';
 
+import { Actividad } from '../actividad/actividad';
 
 @Component({
   selector: 'app-admin-grupos-upadate',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, Actividad],
   templateUrl: './admin-grupos-upadate.html',
   styleUrl: './admin-grupos-upadate.css',
 })

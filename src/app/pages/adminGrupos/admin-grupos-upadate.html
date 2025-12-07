@@ -101,7 +101,7 @@
 
     </form>
 
-    <div>
-        <!-- <app-actividad></app-actividad> -->
+    <div *ngIf="grupoSeleccionado">
+        <app-actividad [idGrupoVoluntariado]="grupoSeleccionado.idGrupoVoluntariado!"></app-actividad>
     </div>
 </div>
