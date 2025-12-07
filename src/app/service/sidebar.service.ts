@@ -56,8 +56,8 @@ export class SidebarService {
       submenu: [
         { titulo: 'Usuarios', url: '/pages/usuarios', roles: ['ADMIN'] },
         { titulo: 'Cargos', url: '/pages/cargos', roles: ['ADMIN'] },
-        { titulo: 'Tipos Grupo Gupos de Voluntarios', url: '/pages/tipos-grupo-voluntarios', roles: ['ADMIN'] },
-        { titulo: 'Actividades', url: '/pages/actividades', roles: ['ADMIN'] }
+        { titulo: 'Actividades', url: '/pages/actividades', roles: ['ADMIN'] },
+        { titulo: 'Tipos Grupo Gupos de Voluntarios', url: '/pages/tipos-grupo-voluntarios', roles: ['ADMIN'] }
       ]
     }
   ];

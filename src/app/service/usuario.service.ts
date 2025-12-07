@@ -7,12 +7,6 @@ import { Usuario } from '../models/ususario.model';
 import { URL_SERVICIOS } from '../config/config';
 import Swal from 'sweetalert2';
 
-// Interfaz para Fecha por que no esta definida en la tabla usuario
-interface Fecha {
-  fechInicioPer?: string;
-  fechFinPer?: string;
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -101,7 +95,7 @@ export class UsuarioService {
     if (this.isBrowser) {
       localStorage.removeItem('token');
       localStorage.removeItem('usuario');
-      localStorage.removeItem('email');
+      // localStorage.removeItem('email');
     }
   }
 
@@ -112,11 +106,13 @@ export class UsuarioService {
       // actualizando
       url += '/' + usuario.idUsuario;
 
-      return this.http.put(url, usuario, {
-        headers: {
-          'x-token': this.token
-        }
-      }).pipe(
+      return this.http.put(url, usuario
+      //   , {
+      //   headers: {
+      //     'x-token': this.token
+      //   }
+      // }
+    ).pipe(
         map((resp: any) => {
           Swal.fire('Usuario Actualizado', usuario.nombre, 'success');
           return resp.usuario;
@@ -124,11 +120,13 @@ export class UsuarioService {
       );
     } else {
       // creando
-      return this.http.post(url, { ...usuario }, {
-        headers: {
-          'x-token': this.token
-        }
-      }).pipe(
+      return this.http.post(url, { ...usuario }
+      //   , {
+      //   headers: {
+      //     'x-token': this.token
+      //   }
+      // }
+    ).pipe(
         map((resp: any) => {
           Swal.fire('Usuario Creado', usuario.nombre, 'success');
           return resp.usuario;
@@ -139,42 +137,50 @@ export class UsuarioService {
 
   cargarUsuarios() {
     const url = URL_SERVICIOS + '/usuarios';
-    return this.http.get(url, {
-      headers: {
-        'x-token': this.token
-      }
-    });
+    return this.http.get(url
+    //   , {
+    //   headers: {
+    //     'x-token': this.token
+    //   }
+    // }
+  );
   }
 
   cargarUsuario(id: string): Observable<any> {
     const url = URL_SERVICIOS + '/usuarios/' + id;
-    return this.http.get(url, {
-      headers: {
-        'x-token': this.token
-      }
-    }).pipe(
+    return this.http.get(url
+    //   , {
+    //   headers: {
+    //     'x-token': this.token
+    //   }
+    // }
+  ).pipe(
       map((resp: any) => resp.usuarios[0])
     );
   }
 
   buscarUsuarios(termino: string): Observable<Usuario[]> {
     const url = URL_SERVICIOS + '/usuarios/busqueda' + termino;
-    return this.http.get(url, {
-      headers: {
-        'x-token': this.token
-      }
-    }).pipe(
+    return this.http.get(url
+    //   , {
+    //   headers: {
+    //     'x-token': this.token
+    //   }
+    // }
+  ).pipe(
       map((resp: any) => resp.usuarios),
     );
   }
 
   desactivarUsuario(usuario: Usuario): Observable<any> {
     let url = URL_SERVICIOS + '/usuarios/delete/' + usuario.idUsuario;
-    return this.http.delete(url, {
-      headers: {
-        'x-token': this.token
-      }
-    }).pipe(
+    return this.http.delete(url 
+    //   ,{
+    //   headers: {
+    //     'x-token': this.token
+    //   }
+    // }
+  ).pipe(
       map((resp: any) => {
         Swal.fire('Usuario Desactivado', usuario.nombre, 'success');
         return resp;

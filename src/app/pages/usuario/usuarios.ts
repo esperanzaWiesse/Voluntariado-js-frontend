@@ -137,41 +137,4 @@ export class Usuarios implements OnInit {
     });
   }
 
-  // eliminarUsuario(usuario: Usuario): void {
-  //   Swal.fire({
-  //     title: '¿Estás seguro?',
-  //     html: `Esta acción eliminará permanentemente a:<br><strong>${usuario.nombre} ${usuario.apPaterno}</strong>`,
-  //     icon: 'error',
-  //     showCancelButton: true,
-  //     confirmButtonText: 'Sí, eliminar',
-  //     cancelButtonText: 'Cancelar',
-  //     reverseButtons: true,
-  //     allowOutsideClick: false,
-  //     customClass: {
-  //       confirmButton: 'bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-2',
-  //       cancelButton: 'bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mx-2'
-  //     },
-  //     buttonsStyling: false
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       this.usuarioService.eliminarUsuario(usuario.idUsuario!)
-  //         .subscribe({
-  //           next: () => {
-  //             this.cargarUsuarios();
-  //             Swal.fire({
-  //               title: '¡Eliminado!',
-  //               text: 'El usuario ha sido eliminado correctamente.',
-  //               icon: 'success',
-  //               timer: 2000,
-  //               showConfirmButton: false
-  //             });
-  //           },
-  //           error: (err: any) => {
-  //             console.error('Error:', err);
-  //             Swal.fire('Error', 'No se pudo eliminar el usuario', 'error');
-  //           }
-  //         });
-  //     }
-  //   });
-  // }
 }
