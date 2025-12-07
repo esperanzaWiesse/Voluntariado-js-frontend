@@ -1,1 +1,175 @@
-<p>actividad works!</p>
+
+<!-- Contenido principal -->
+<div class="container mx-auto px-4 py-8 animate-fade-in">
+    <div class="bg-white rounded-xl shadow-2xl overflow-hidden border border-gray-100">
+        <div class="p-8">
+
+            <!-- Header con título y botón -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+                <div>
+                    <h3 class="text-3xl font-bold text-gray-800 mb-2">
+                        Actividades Registradas
+                    </h3>
+                    <p class="text-gray-600">
+                        Total de registros: <span class="font-semibold text-blue-600">
+                            {{ totalRegistros }}
+                        </span>
+                    </p>
+                </div>
+
+                <!-- Botón crear -->
+                <button [routerLink]="['/pages/actividad','nuevo']"
+                    class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl flex items-center gap-3 whitespace-nowrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path
+                            d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
+                    </svg>
+                    <span>Crear Actividades</span>
+                </button>
+            </div>
+
+            <!-- Tabla responsiva -->
+            <div class="overflow-x-auto rounded-lg border border-gray-200">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gradient-to-r from-gray-50 to-gray-100">
+                        <tr>
+                            <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                N°
+                            </th>
+                            <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                Actividad
+                            </th>
+                            <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                Horas
+                            </th>
+                            <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                Descripción
+                            </th>
+                            <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                Fecha Creación
+                            </th>
+                            <th class="px-6 py-4 text-center text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                Acciones
+                            </th>
+                            <th class="px-6 py-4 text-center text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                Estado
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <!-- Fila de la tabla -->
+                        <tr *ngFor="let actividad of actividades | paginate: { itemsPerPage: 10, currentPage: p }; let indice=index"
+                            class="hover:bg-blue-50 transition duration-200 ease-in-out">
+
+                            <!-- Número -->
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-sm font-semibold text-gray-700 bg-gray-100 px-3 py-1 rounded-full">
+                                    {{ (p - 1) * 10 + indice + 1 }}
+                                </span>
+                            </td>
+
+                            <!-- Nombre de la actividad -->
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div>
+                                        <div class="text-sm font-bold text-gray-900">{{ actividad.nombre }}</div>
+                                        <div class="text-xs text-gray-500">ID: {{ actividad.idActi }}</div>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <!-- Horas -->
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900 font-medium">{{ actividad.duracionhoras }}</div>
+                            </td>
+
+                            <!-- Descripdion -->
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900 font-medium" 
+                                    [title]="actividad.descripcion">
+                                    {{ truncateWords(actividad.descripcion, 8) }}
+                                </div>
+                            </td>
+
+                            <!-- Fecha de creación -->
+                            <td class="px-6 py-4">
+                                <div class="text-sm text-gray-900">{{ actividad.fecha | date:'dd/MM/yyyy' }}</div>
+                            </td>
+
+                            <!-- Botón editar -->
+                            <td class="px-6 py-4 whitespace-nowrap text-center">
+                                <button [routerLink]="['/pages/actividad', actividad.idActi]"
+                                    class="inline-flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-medium py-2.5 px-5 rounded-lg transition duration-200 transform hover:scale-105 shadow-md hover:shadow-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path
+                                            d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+                                        <path fill-rule="evenodd"
+                                            d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                    <span>Editar</span>
+                                </button>
+                            </td>
+
+
+                            <!-- Toggle Tailwind -->
+                            <td class="px-6 py-4 whitespace-nowrap text-center">
+                                <div class="flex flex-col items-center gap-2">
+                                    <button type="button" role="switch" [attr.aria-checked]="actividad.activo"
+                                        (click)="desactivarActividad(actividad)"
+                                        class="relative inline-flex items-center focus:outline-none">
+                                        <!-- Track -->
+                                        <span class="block w-14 h-8 rounded-full transition-colors duration-300"
+                                            [ngClass]="actividad.activo ? 'bg-[#2A7FFF]' : 'bg-gray-200'"></span>
+                                        <!-- Knob -->
+                                        <span
+                                            class="absolute left-0.5 top-0.5 w-7 h-7 bg-white rounded-full shadow transform transition-transform duration-300 flex items-center justify-center"
+                                            [ngClass]="actividad.activo ? 'translate-x-6' : 'translate-x-0'">
+                                            <!-- Icono: check cuando activo -->
+                                            <svg *ngIf="actividad.activo" xmlns="http://www.w3.org/2000/svg"
+                                                class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M20 6L9 17l-5-5" />
+                                            </svg>
+
+                                            <!-- Icono: X cuando inactivo -->
+                                            <svg *ngIf="!actividad.activo" xmlns="http://www.w3.org/2000/svg"
+                                                class="h-4 w-4 text-gray-400" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <path d="M18 6L6 18M6 6l12 12" />
+                                            </svg>
+                                        </span>
+                                    </button>
+
+                                    <!-- Etiqueta -->
+                                    <div class="text-sm font-semibold"
+                                        [ngClass]="actividad.activo ? 'text-[#2A7FFF]' : 'text-gray-500'">
+                                        {{ actividad.activo ? 'Activo' : 'Inactivo' }}
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> 
+
+            <!-- Paginación -->
+            <div class="mt-8 flex justify-center" *ngIf="actividades.length > 0">
+                <div class="bg-gray-50 px-6 py-4 rounded-lg shadow-inner">
+                    <pagination-controls (pageChange)="p = $event" previousLabel="← Anterior" nextLabel="Siguiente →"
+                        [maxSize]="5" class="custom-pagination">
+                    </pagination-controls>
+                </div>
+            </div>
+
+            <!-- Información adicional -->
+            <div class="mt-6 text-center text-sm text-gray-500" *ngIf="actividades.length > 0">
+                Mostrando {{ (p - 1) * 10 + 1 }} - {{ (p * 10 > totalRegistros) ? totalRegistros : p * 10 }} de {{
+                totalRegistros }} actividades
+            </div>
+
+        </div>
+    </div>
+</div>
