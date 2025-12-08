@@ -53,4 +53,8 @@ export class ParticipanteService {
     obtenerReporteParticipacion(idUsuario: number): Observable<any> {
         return this.http.get<any>(`${this.apiUrl}/reporte/${idUsuario}`);
     }
+
+    descargarCertificado(idUsuario: number): Observable<Blob> {
+        return this.http.get(`${URL_SERVICIOS}/certificados/global/${idUsuario}`, { responseType: 'blob' });
+    }
 }

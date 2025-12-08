@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { UsuarioService } from '../../service/usuario.service';
 import { ParticipanteService } from '../../service/participante.service';
 import { ReporteParticipacion } from '../../models/partcipantes.model';
+import { URL_SERVICIOS } from '../../config/config';
 
 @Component({
   selector: 'app-beneficios',
@@ -29,19 +30,16 @@ export class Beneficios implements OnInit {
   }
 
   cargarReporte() {
-    // Obtener usuario logueado
-    const usuario = this.usuarioService.usuario; // Usar propiedad directa si ya se cargó en login/storage
+    const usuario = this.usuarioService.usuario;
 
     console.log('Usuario en servicio:', usuario);
 
     if (!usuario || !usuario.idUsuario) {
-      // Si no está en memoria, intentar cargarlo del storage si hay token
       this.usuarioService.cargarStorage();
       if (this.usuarioService.usuario) {
         console.log('Usuario cargado de storage:', this.usuarioService.usuario);
         this.obtenerDatos(Number(this.usuarioService.usuario.idUsuario));
       } else {
-        // Redirigir a login o mostrar error
         console.warn('No se encontró usuario logueado');
         Swal.fire('Error', 'No se ha identificado al usuario', 'error');
         this.cargando = false;
@@ -59,8 +57,6 @@ export class Beneficios implements OnInit {
     this.participanteService.obtenerReporteParticipacion(idUsuario).subscribe({
       next: (resp: any) => {
         console.log('Respuesta reporte:', resp);
-        // La respuesta puede venir directa o dentro de una propiedad, segun el user endpoint:
-        // { "ok": true, "idUsuario": ..., ... } -> Esto parece ser el objeto directo
         this.reporte = resp;
         this.cargando = false;
         this.cdr.detectChanges();
@@ -75,10 +71,33 @@ export class Beneficios implements OnInit {
   }
 
   solicitarCertificado() {
+    if (!this.reporte || !this.reporte.idUsuario) {
+      Swal.fire('Error', 'No se ha identificado el usuario para generar el certificado', 'error');
+      return;
+    }
+
     Swal.fire({
-      title: 'Solicitud Enviada',
-      text: 'Se ha enviado tu solicitud de certificado a la administración.',
-      icon: 'success'
+      title: 'Generando Certificado',
+      text: 'Por favor espere...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
+
+    this.participanteService.descargarCertificado(this.reporte.idUsuario).subscribe({
+      next: (blob: Blob) => {
+        Swal.close();
+        const url = window.URL.createObjectURL(blob);
+        window.open(url, '_blank');
+
+        // Optional: revoke URL after some time to free memory, but beware if user refreshes the new tab immediately
+        // setTimeout(() => window.URL.revokeObjectURL(url), 10000); 
+      },
+      error: (err) => {
+        console.error('Error al descargar certificado:', err);
+        Swal.fire('Error', 'No se pudo descargar el certificado', 'error');
+      }
     });
   }
 }
