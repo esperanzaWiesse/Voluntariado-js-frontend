@@ -14,6 +14,8 @@ import { AdminGrupos } from './adminGrupos/admin-grupos';
 import { AdminGruposUpadate } from './adminGrupos/admin-grupos-upadate';
 import { Inscripciones } from './inscripciones/inscripciones';
 import { InscripcionesUpdate } from './inscripciones/inscripciones-update';
+import { Participantes } from './participantes/participantes';
+import { Beneficios } from './beneficios/beneficios';
 
 
 export const pagesRoutes: Routes = [
@@ -44,6 +46,12 @@ export const pagesRoutes: Routes = [
       // Inscripciones
       { path: 'inscripciones', component: Inscripciones, data: { titulo: 'Gestión de Inscripciones' } },
       { path: 'inscripcion/:id', component: InscripcionesUpdate, data: { titulo: 'Inscripcion' } },
+
+      // Participantes
+      { path: 'participantes/:idActividad', component: Participantes, data: { titulo: 'Gestión de Participantes' } },
+
+      // Beneficios /pages/mis-beneficios
+      { path: 'beneficios', component: Beneficios, data: { titulo: 'Ver mis Beneficios' } },
     ]
   }
 ];

@@ -1,1 +1,145 @@
-<p>participantes works!</p>
+<div class="p-6 animate-fade-in">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold text-gray-800">Participantes de la Actividad</h1>
+        <button (click)="abrirModal()"
+            class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow transition flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            Agregar Participante
+        </button>
+    </div>
+
+    <!-- Tabla -->
+    <div class="bg-white shadow-lg rounded-xl overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
+                        <th class="py-3 px-6 text-center">Usuario</th>
+                        <th class="py-3 px-6 text-center">Horas Realizadas</th>
+                        <th class="py-3 px-6 text-center">¿Completado?</th>
+                        <th class="py-3 px-6 text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-700 text-sm font-light">
+                    <tr *ngFor="let participante of participantes | paginate: { itemsPerPage: 10, currentPage: p }"
+                        class="border-b border-gray-200 hover:bg-gray-50">
+
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0 h-10 w-10">
+                                    <div
+                                        class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 font-bold">
+                                        {{ participante.nombreUsuario?.charAt(0) || 'U' }}
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <div class="text-sm font-medium text-gray-900">
+                                        {{ participante.nombreUsuario }} {{ participante.apPaterno }}
+                                    </div>
+                                    <!-- <div class="text-sm text-gray-500">{{ participante.email }}</div> -->
+                                </div>
+                            </div>
+                        </td>
+
+                        <td class="py-3 px-6 text-center">
+                            <input type="number" min="0" [value]="participante.horasRealizadas"
+                                (change)="actualizarHoras(participante, $any($event.target).value)"
+                                class="w-20 text-center border rounded px-2 py-1 focus:ring-2 focus:ring-blue-500 outline-none">
+                        </td>
+
+                        <td class="py-3 px-6 text-center flex justify-center">
+                            <!-- Toggle Switch -->
+                            <button type="button" role="switch" [attr.aria-checked]="participante.completado"
+                                (click)="actualizarEstado(participante)"
+                                class="relative inline-flex items-center focus:outline-none">
+                                <span class="block w-12 h-6 rounded-full transition-colors duration-300"
+                                    [ngClass]="participante.completado ? 'bg-green-500' : 'bg-gray-300'"></span>
+                                <span
+                                    class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow transform transition-transform duration-300"
+                                    [ngClass]="participante.completado ? 'translate-x-6' : 'translate-x-0'">
+                                </span>
+                            </button>
+                        </td>
+
+                        <td class="py-3 px-6 text-center">
+                            <button (click)="eliminarParticipacion(participante)"
+                                class="text-red-500 hover:text-red-700 hover:bg-red-100 rounded-full p-2 transition"
+                                title="Eliminar">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="participantes.length === 0 && !cargando">
+                        <td colspan="4" class="text-center py-6 text-gray-500">
+                            No hay participantes registrados en esta actividad.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="flex justify-center mt-4 mb-4">
+            <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"
+                class="custom-pagination"></pagination-controls>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Agregar Participante -->
+<div *ngIf="mostrarModal"
+    class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center z-50">
+    <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-md animate-fade-in-down">
+        <h2 class="text-2xl font-bold mb-4 text-gray-800">Agregar Participante</h2>
+
+        <form [formGroup]="formParticipacion" (ngSubmit)="guardarParticipacion()">
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Usuario</label>
+                <select formControlName="idUsuario"
+                    class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="">-- Seleccione Usuario --</option>
+                    <option *ngFor="let usuario of usuarios" [value]="usuario.idUsuario">
+                        {{ usuario.nombre }} {{ usuario.apPaterno }} ({{ usuario.email }})
+                    </option>
+                </select>
+                <div *ngIf="formParticipacion.get('idUsuario')?.touched && formParticipacion.get('idUsuario')?.invalid"
+                    class="text-red-500 text-xs mt-1">
+                    El usuario es requerido.
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Horas Realizadas <span
+                        class="text-xs font-normal text-gray-500">(Máximo: {{ maxHoras }})</span></label>
+                <input type="number" formControlName="horasRealizadas" [max]="maxHoras"
+                    class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <div *ngIf="formParticipacion.get('horasRealizadas')?.hasError('max') && formParticipacion.get('horasRealizadas')?.touched"
+                    class="text-red-500 text-xs mt-1">
+                    No puede exceder las {{ maxHoras }} horas de la actividad.
+                </div>
+            </div>
+
+            <div class="mb-6 flex items-center">
+                <input type="checkbox" formControlName="completado" id="checkCompletado"
+                    class="mr-2 h-4 w-4 text-blue-600">
+                <label for="checkCompletado" class="text-gray-700">Marcar como Completado</label>
+            </div>
+
+            <div class="flex justify-end gap-2">
+                <button type="button" (click)="cerrarModal()"
+                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded transition">
+                    Cancelar
+                </button>
+                <button type="submit" [disabled]="formParticipacion.invalid"
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition disabled:opacity-50">
+                    Guardar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

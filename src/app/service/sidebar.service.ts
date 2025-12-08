@@ -38,14 +38,19 @@ export class SidebarService {
       roles: ['ADMIN', 'VISITANTE'],
       submenu: [
         {
+          titulo: 'Mis beneficios',
+          url: '/pages/beneficios',
+          roles: ['ADMIN', 'VISITANTE']
+        },
+        {
           titulo: 'Inscripciones',
           url: '/pages/inscripciones',
-          roles: ['ADMIN', 'VISITANTE'] // Solo admin
+          roles: ['ADMIN', 'VISITANTE']
         },
         {
           titulo: 'Administracion de grupos ',
           url: '/pages/admin-grupos',
-          roles: ['ADMIN', 'VISITANTE'] // Ambos
+          roles: ['ADMIN']
         }
       ]
     },

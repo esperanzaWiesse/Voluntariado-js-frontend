@@ -87,7 +87,11 @@
                 <label class="block text-gray-700 font-medium mb-1">Código Universitario</label>
                 <input type="text" formControlName="codUniversitario"
                     class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                    placeholder="Opcional" />
+                    placeholder="Codigo de administrativo, docente o estudiante" />
+                <p *ngIf="formUsuario.get('codUniversitario')?.invalid && formUsuario.get('codUniversitario')?.touched"
+                    class="text-red-500 text-sm mt-1">
+                    Debe ingresar su codigo universitario de administrativo, docente o estudiante.
+                </p>
             </div>
 
             <!-- Tipo Código -->
@@ -96,10 +100,28 @@
                 <select formControlName="tipoCodUniversitario"
                     class="w-full px-4 py-2 border rounded-lg bg-white focus:ring-2 focus:ring-blue-500">
                     <option value="">Seleccione</option>
-                    <option value="estudiante">Estudiante</option>
                     <option value="docente">Docente</option>
                     <option value="administrativo">Administrativo</option>
                     <option value="invitado">Invitado</option>
+                    <option value="Medicina Humana">Medicina Humana</option>
+                    <option value="Enfermería">Enfermería</option>
+                    <option value="Estomatología">Estomatología</option>
+                    <option value="Obstetricia">Obstetricia</option>
+                    <option value="Psicología">Psicología</option>
+                    <option value="Arquitectura">Arquitectura</option>
+                    <option value="Ingeniería Civil">Ingeniería Civil</option>
+                    <option value="Ingeniería de Sistemas">Ingeniería de Sistemas</option>
+                    <option value="Ingeniería Industrilal">Ingeniería Industrial</option>
+                    <option value="Ingeniería Ambiental">Ingeniería Ambiental</option>
+                    <option value="Administración">Administración</option>
+                    <option value="Contabilidad">Contabilidad</option>
+                    <option value="Economía">Economía</option>
+                    <option value="Administración de Negocios Internacionales">Administración de Negocios
+                        Internacionales</option>
+                    <option value="Finanzas">Finanzas</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Educación">Educación</option>
+                    <option value="Turismo">Turismo</option>
                 </select>
             </div>
 
